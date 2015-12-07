@@ -1,7 +1,7 @@
 #!/bin/bash
 # 'dotgovmail' uses a General Services Administration list of all federal agency second-level .gov domain names to check whether a given domain is sending mail and writes that information to one of two files ('mail' and 'nomail'). (Note that this list does not include subdomains, like ic.fbi.gov.)
 # With options, the program can also check for SPF and DMARC records.
- 
+
 #Variables
 url="https://raw.githubusercontent.com/GSA/data/gh-pages/dotgov-domains/2015-11-03-full.csv"  #or .gov-domains-api 
 force="0"
