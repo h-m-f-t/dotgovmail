@@ -1,6 +1,5 @@
 #!/bin/bash
-# 'dotgovmail' uses a General Services Administration list of all federal agency second-level .gov domain names to check whether a given domain is sending mail and writes that information to one of two files ('mail' and 'nomail'). (Note that this list does not include subdomains, like ic.fbi.gov.)
-# With options, the program can also check for SPF and DMARC records.
+# 'dotgovmail'
 
 #Variables
 url="https://raw.githubusercontent.com/GSA/data/gh-pages/dotgov-domains/2015-11-03-full.csv"  #or .gov-domains-api 
@@ -8,12 +7,12 @@ force="0"
 agency=""
 
 
-function dl()			#download .gov domains from 18F, sort by federal agency
+function dl()	#download .gov domains from 18F, sort by federal agency
 {
 	echo -n "downloading .gov domains... "
 	wget --output-document=govlist --quiet "$url"
 	if [[ "$opt" = "a" ]]; then
-		awk -F , '$3 ~ /'"$agency"'/{print $1}' govlist |sort > fedlist #The $pattern in the awk command is not protected by single quotes so that the shell does expand the variable but it needs to be put in double quotes to properly handle patterns containing spaces.
+		awk -F , '$3 ~ /'"$agency"'/{print $1}' govlist |sort > fedlist 
 		echo ""$(wc -l fedlist|sed -e 's/^[ \t]*//'|awk '{print $1}') domains registered to $OPTARG.""
 	else
 		awk -F , '$2 == "Federal Agency"' govlist | cut -d, -f1|sort > fedlist
@@ -21,7 +20,7 @@ function dl()			#download .gov domains from 18F, sort by federal agency
 	fi
 }
 
-function mxcheck()			#show .gov domains with mx records
+function mxcheck()	#show .gov domains with mx records
 {
 	if [[ -e mail ]] && [[ "$force" != "1" ]]; then
 		if [[ -e $(find mail -mtime -1w) ]]; then
@@ -43,7 +42,7 @@ function mxcheck()			#show .gov domains with mx records
 	fi
 }
 
-function spfcheck()			#-s using the output of mxcheck(), check for SPF records
+function spfcheck()   #-s using the output of mxcheck(), check for SPF records
 {
 	if [[ ! -e mail ]]; then
 		mxcheck;spfcheck
@@ -296,6 +295,9 @@ else
 					;;
 			\?	)	echo "invalid argument: -$OPTARG" >&2
 					echo;usage
+					exit 1
+					;;
+			*	)	usage
 					exit 1
   		esac
 	done	
