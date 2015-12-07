@@ -3,8 +3,7 @@
 # With options, the program can also check for SPF and DMARC records.
 
 #Variables
-url="https://raw.githubusercontent.com/GSA/data/gh-pages/dotgov-domains/2015-11-03-full.csv"  
-#or .gov-domains-api https://inventory.data.gov/dataset/b2c31002-8a5e-4cd0-85bd-6971934f4e59/resource/02706c7b-98e3-4267-8dd8-e3bb2d8c7ce3/download/fulldomainreport03132015.csv
+url="https://raw.githubusercontent.com/GSA/data/gh-pages/dotgov-domains/2015-11-03-full.csv"  #or .gov-domains-api 
 force="0"
 agency=""
 
