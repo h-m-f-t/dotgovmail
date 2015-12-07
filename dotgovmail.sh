@@ -1,6 +1,6 @@
 #!/bin/bash
 # 'dotgovmail'
-
+ 
 #Variables
 url="https://raw.githubusercontent.com/GSA/data/gh-pages/dotgov-domains/2015-11-03-full.csv"  #or .gov-domains-api 
 force="0"
