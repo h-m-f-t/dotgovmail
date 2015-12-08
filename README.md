@@ -2,9 +2,9 @@
 Show MX, SPF, and DMARC records for US federal agency domains.
 
 
-```usage: ./dotgovmail <options> [<domain>]```
+```usage: ./dotgovmail <options> [<agency>]```
 
--a "{agency name}" will give a non-/mail-sending, non-/SPF, non-/DMARC breakdown by {agency}. (See all agencies available with -l.) Be sure to wrap {agency} in quotes. When running -a, all other options are run by default (i.e., there is no need to select -m, -s, or -d options with -a).
+-a "{agency name}" will give a non-/mail-sending, no-/SPF, no-/DMARC breakdown by {agency}. (See all agencies available with -l.) Be sure to wrap {agency} in quotes. When running -a, all other options are run by default (i.e., there is no need to select -m, -s, or -d options with -a).
 
 -d will check for DMARC records at _dmarc.{domain}.gov for all mail-sending and non-mail sending domains.
 
