@@ -9,8 +9,17 @@ agency=""
 
 function dl()	#download .gov domains from 18F, sort by federal agency
 {
+	if hash wget 2>/dev/null; then
+		wget --output-document=govlist --quiet "$url"
+   	elif
+        	hash curl 2>/dev/null; then 
+        	curl -silent -o govlist "$url"
+    	else
+    		echo "[*] ERROR: Please install either wget or cURL."
+    		exit 1
+    	fi
 	echo -n "downloading .gov domains... "
-	wget --output-document=govlist --quiet "$url"
+	
 	if [[ "$opt" = "a" ]]; then
 		awk -F , '$3 ~ /'"$agency"'/{print $1}' govlist |sort > fedlist 
 		echo ""$(wc -l fedlist|sed -e 's/^[ \t]*//'|awk '{print $1}') domains registered to $OPTARG.""
@@ -276,7 +285,7 @@ else
 	while getopts ":a:dflms" opt; do
 		case "$opt" in
 	  		a	)	agency=$OPTARG
-					mkdir "$agency";cd "$agency"
+					mkdir "$agency" 2>/dev/null;cd "$agency"
 	  				mxcheck;spfcheck;dmarc
 	  				echo "[*] 'mail*' and 'nomail*' files saved at $(pwd)."
 					;;
