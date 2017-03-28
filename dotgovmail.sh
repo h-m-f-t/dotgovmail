@@ -1,8 +1,8 @@
 #!/bin/bash
 # 'dotgovmail'
- 
+
 #Variables
-url="https://raw.githubusercontent.com/GSA/data/gh-pages/dotgov-domains/2015-11-03-full.csv"  #or .gov-domains-api 
+url="https://raw.githubusercontent.com/GSA/data/gh-pages/dotgov-domains/current-federal.csv"  #or .gov-domains-api 
 force="0"
 agency=""
 
@@ -12,16 +12,16 @@ function dl()	#download .gov domains from 18F, sort by federal agency
 	if hash wget 2>/dev/null; then
 		wget --output-document=govlist --quiet "$url"
    	elif
-        	hash curl 2>/dev/null; then 
+        	hash curl 2>/dev/null; then
         	curl -silent -o govlist "$url"
     	else
     		echo "[*] ERROR: Please install either wget or cURL."
     		exit 1
     	fi
 	echo -n "downloading .gov domains... "
-	
+
 	if [[ "$opt" = "a" ]]; then
-		awk -F , '$3 ~ /'"$agency"'/{print $1}' govlist |sort > fedlist 
+		awk -F , '$3 ~ /'"$agency"'/{print $1}' govlist |sort > fedlist
 		echo ""$(wc -l fedlist|sed -e 's/^[ \t]*//'|awk '{print $1}') domains registered to $OPTARG.""
 	else
 		awk -F , '$2 == "Federal Agency"' govlist | cut -d, -f1|sort > fedlist
@@ -33,10 +33,10 @@ function mxcheck()	#show .gov domains with mx records
 {
 	if [[ -e mail ]] && [[ "$force" != "1" ]]; then
 		if [[ -e $(find mail -mtime -1w) ]]; then
-			echo ">> 'mail' is at $(pwd) and is ~newish (< 1 week old). To force a check anyway, use '-f' as the first option." 
+			echo ">> 'mail' is at $(pwd) and is ~newish (< 1 week old). To force a check anyway, use '-f' as the first option."
 			exit 1
 		fi
-		
+
 	else
 		dl
 		echo -n "checking for domains that send email... "
@@ -94,7 +94,7 @@ function dmarc()
 		end_spin
 		if [[ "$opt" != "a" ]]; then
 			echo "[*] 'maildmarc', 'mailnodmarc', 'nomaildmarc', 'nomailnodmarc' saved to $(pwd)."
-		fi	
+		fi
 	fi
 }
 
@@ -103,11 +103,11 @@ function cleanup()
 		rm -f govlist fedlist
 }
 
-function spin() 
+function spin()
 {
     local i sp n
     sp='/-\|'
-    n=${#sp}   
+    n=${#sp}
     printf ' '
     while sleep 0.1; do
         printf "%s\b" "${sp:i++%n:1}"
@@ -309,7 +309,7 @@ else
 			*	)	usage
 					exit 1
   		esac
-	done	
+	done
 fi
 cleanup
 exit 0
